@@ -49,11 +49,10 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template')
     .querySelector('.setup-similar-item');
 
 var wizards = [];
-var wizard = {};
 
 var randomizeWizard = function () {
   for (var i = 0; i < 4; i++) {
-    wizards.push(wizard);
+    wizards[i] = {};
     var randomName = firstNames[Math.floor(Math.random() * firstNames.length)] + ' ' + lastNames[Math.floor(Math.random() * lastNames.length)];
     wizards[i].name = randomName;
     wizards[i].coatColor = coats[Math.floor(Math.random() * coats.length)];
