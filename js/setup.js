@@ -56,11 +56,13 @@ var getRandomValue = function (array) {
 
 var randomizeWizards = function () {
   for (var i = 0; i < 4; i++) {
-    wizards[i] = {};
     var randomName = getRandomValue(firstNames) + ' ' + getRandomValue(lastNames);
-    wizards[i].name = randomName;
-    wizards[i].coatColor = getRandomValue(coats);
-    wizards[i].eyesColor = getRandomValue(eyes);
+    var newObject = {
+      name: randomName,
+      coatColor: getRandomValue(coats),
+      eyesColor: getRandomValue(eyes)
+    };
+    wizards.push(newObject);
   }
 };
 
