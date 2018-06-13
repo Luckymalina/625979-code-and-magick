@@ -102,10 +102,6 @@ var setupOpen = document.querySelector('.setup-open');
 var setupClose = setup.querySelector('.setup-close');
 var inputUserName = setup.querySelector('.setup-user-name');
 
-var wizardCoat = setup.querySelector('.wizard-coat');
-var wizardEyes = setup.querySelector('.wizard-eyes');
-var wizardFireball = setup.querySelector('.setup-fireball-wrap');
-
 setup.querySelector('.setup-similar').classList.remove('hidden');
 
 var onPopupEscPress = function (evt) {
@@ -122,22 +118,13 @@ var onInputBlur = function () {
   document.addEventListener('keydown', onPopupEscPress);
 };
 
-var onCoatClick = function () {
-  var randomCoat = getRandom(coats);
-  wizardCoat.style.fill = coats[randomCoat];
-  setup.querySelector('input[name="coat-color"]').value = coats[randomCoat];
-};
-
-var onEyesClick = function () {
-  var randomEyes = getRandom(eyes);
-  wizardEyes.style.fill = eyes[randomEyes];
-  setup.querySelector('input[name="eyes-color"]').value = eyes[randomEyes];
-};
-
-var onFireballClick = function () {
-  var randomFireball = getRandom(fireballs);
-  wizardFireball.style.background = fireballs[randomFireball];
-  setup.querySelector('input[name="fireball-color"]').value = fireballs[randomFireball];
+var addHandler = function (button, item, attr, array) {
+  var el = setup.querySelector(button);
+  el.addEventListener('click', function () {
+    var random = getRandom(array);
+    el.style[attr] = array[random];
+    setup.querySelector('input[name="' + item + '-color"]').value = array[random];
+  });
 };
 
 var openPopup = function () {
@@ -145,9 +132,9 @@ var openPopup = function () {
   document.addEventListener('keydown', onPopupEscPress);
   inputUserName.addEventListener('focus', onInputFocus);
   inputUserName.addEventListener('blur', onInputBlur);
-  wizardCoat.addEventListener('click', onCoatClick);
-  wizardEyes.addEventListener('click', onEyesClick);
-  wizardFireball.addEventListener('click', onFireballClick);
+  addHandler('.wizard-coat', 'coat', 'fill', coats);
+  addHandler('.wizard-eyes', 'eyes', 'fill', eyes);
+  addHandler('.setup-fireball-wrap', 'fireball', 'background', fireballs);
 };
 
 var closePopup = function () {
@@ -174,9 +161,3 @@ setupClose.addEventListener('keydown', function (evt) {
     closePopup();
   }
 });
-
-var onEyesClick = function () {
-  var randomEyes = getRandom(eyes);
-  wizardEyes.style.fill = eyes[randomEyes];
-  setup.querySelector('input[name="eyes-color"]').value = eyes[randomEyes];
-};
