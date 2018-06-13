@@ -118,7 +118,7 @@ var onInputBlur = function () {
   document.addEventListener('keydown', onPopupEscPress);
 };
 
-var addHandler = function (button, item, attr, array) {
+var wizardClickHandler = function (button, item, attr, array) {
   var el = setup.querySelector(button);
   el.addEventListener('click', function () {
     var random = getRandom(array);
@@ -130,11 +130,6 @@ var addHandler = function (button, item, attr, array) {
 var openPopup = function () {
   setup.classList.remove('hidden');
   document.addEventListener('keydown', onPopupEscPress);
-  inputUserName.addEventListener('focus', onInputFocus);
-  inputUserName.addEventListener('blur', onInputBlur);
-  addHandler('.wizard-coat', 'coat', 'fill', coats);
-  addHandler('.wizard-eyes', 'eyes', 'fill', eyes);
-  addHandler('.setup-fireball-wrap', 'fireball', 'background', fireballs);
 };
 
 var closePopup = function () {
@@ -151,6 +146,13 @@ setupOpen.addEventListener('keydown', function (evt) {
     openPopup();
   }
 });
+
+inputUserName.addEventListener('focus', onInputFocus);
+inputUserName.addEventListener('blur', onInputBlur);
+
+wizardClickHandler('.wizard-coat', 'coat', 'fill', coats);
+wizardClickHandler('.wizard-eyes', 'eyes', 'fill', eyes);
+wizardClickHandler('.setup-fireball-wrap', 'fireball', 'background', fireballs);
 
 setupClose.addEventListener('click', function () {
   closePopup();
