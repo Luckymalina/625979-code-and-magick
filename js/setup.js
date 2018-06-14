@@ -56,13 +56,10 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template')
     .querySelector('.setup-similar-item');
 
 var wizards = [];
+var indexColor = 0;
 
 var getRandomValue = function (array) {
   return array[Math.floor(Math.random() * array.length)];
-};
-
-var getRandom = function (array) {
-  return Math.floor(Math.random() * array.length);
 };
 
 var randomizeWizards = function () {
@@ -121,9 +118,9 @@ var onInputBlur = function () {
 var wizardClickHandler = function (button, item, attr, array) {
   var el = setup.querySelector(button);
   el.addEventListener('click', function () {
-    var random = getRandom(array);
-    el.style[attr] = array[random];
-    setup.querySelector('input[name="' + item + '-color"]').value = array[random];
+    indexColor = (indexColor + 1) % array.length;
+    el.style[attr] = array[indexColor];
+    setup.querySelector('input[name="' + item + '-color"]').value = array[indexColor];
   });
 };
 
