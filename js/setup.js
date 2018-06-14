@@ -1,5 +1,8 @@
 'use strict';
 
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
+
 var firstNames = [
   'Иван',
   'Хуан Себастьян',
@@ -39,9 +42,13 @@ var eyes = [
   'green'
 ];
 
-
-var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
+var fireballs = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
+];
 
 var similarListElement = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template')
@@ -49,6 +56,7 @@ var similarWizardTemplate = document.querySelector('#similar-wizard-template')
     .querySelector('.setup-similar-item');
 
 var wizards = [];
+var indexColor = 0;
 
 var getRandomValue = function (array) {
   return array[Math.floor(Math.random() * array.length)];
@@ -83,4 +91,72 @@ for (var i = 0; i < wizards.length; i++) {
 }
 
 similarListElement.appendChild(fragment);
-userDialog.querySelector('.setup-similar').classList.remove('hidden');
+
+// сценарии взаимодействия пользователя с сайтом
+
+var setup = document.querySelector('.setup');
+var setupOpen = document.querySelector('.setup-open');
+var setupClose = setup.querySelector('.setup-close');
+var inputUserName = setup.querySelector('.setup-user-name');
+
+setup.querySelector('.setup-similar').classList.remove('hidden');
+
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup();
+  }
+};
+
+var onInputFocus = function () {
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+var onInputBlur = function () {
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+var wizardClickHandler = function (button, item, attr, array) {
+  var el = setup.querySelector(button);
+  el.addEventListener('click', function () {
+    indexColor = (indexColor + 1) % array.length;
+    el.style[attr] = array[indexColor];
+    setup.querySelector('input[name="' + item + '-color"]').value = array[indexColor];
+  });
+};
+
+var openPopup = function () {
+  setup.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+var closePopup = function () {
+  setup.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    openPopup();
+  }
+});
+
+inputUserName.addEventListener('focus', onInputFocus);
+inputUserName.addEventListener('blur', onInputBlur);
+
+wizardClickHandler('.wizard-coat', 'coat', 'fill', coats);
+wizardClickHandler('.wizard-eyes', 'eyes', 'fill', eyes);
+wizardClickHandler('.setup-fireball-wrap', 'fireball', 'background', fireballs);
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closePopup();
+  }
+});
