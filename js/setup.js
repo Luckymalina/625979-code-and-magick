@@ -132,6 +132,9 @@ var openPopup = function () {
 var closePopup = function () {
   setup.classList.add('hidden');
   document.removeEventListener('keydown', onPopupEscPress);
+  setup.style.top = '80px';
+  setup.style.left = '50%';
+  setup.style.transform = 'translateX(-50%)';
 };
 
 setupOpen.addEventListener('click', function () {
