@@ -34,9 +34,7 @@
     setup.style.transform = 'translateX(-50%)';
   };
 
-  setupOpen.addEventListener('click', function () {
-    openPopup();
-  });
+  setupOpen.addEventListener('click', openPopup);
 
   setupOpen.addEventListener('keydown', function (evt) {
     window.util.isEnterEvent(evt, openPopup);
@@ -45,9 +43,7 @@
   inputUserName.addEventListener('focus', onInputFocus);
   inputUserName.addEventListener('blur', onInputBlur);
 
-  setupClose.addEventListener('click', function () {
-    closePopup();
-  });
+  setupClose.addEventListener('click', closePopup);
 
   setupClose.addEventListener('keydown', function (evt) {
     window.util.isEnterEvent(evt, closePopup);
