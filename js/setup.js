@@ -58,17 +58,13 @@
   var wizards = [];
   var indexColor = 0;
 
-  var getRandomValue = function (array) {
-    return array[Math.floor(Math.random() * array.length)];
-  };
-
   var randomizeWizards = function () {
     for (var i = 0; i < 4; i++) {
-      var randomName = getRandomValue(firstNames) + ' ' + getRandomValue(lastNames);
+      var randomName = window.utils.getRandomValue(firstNames) + ' ' + window.utils.getRandomValue(lastNames);
       var newObject = {
         name: randomName,
-        coatColor: getRandomValue(coats),
-        eyesColor: getRandomValue(eyes)
+        coatColor: window.utils.getRandomValue(coats),
+        eyesColor: window.utils.getRandomValue(eyes)
       };
       wizards.push(newObject);
     }
