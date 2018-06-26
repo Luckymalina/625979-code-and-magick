@@ -10,7 +10,7 @@
   setup.querySelector('.setup-similar').classList.remove('hidden');
 
   var onPopupEscPress = function (evt) {
-    window.util.isEscEvent(evt, closePopup);
+    window.utils.isEscEvent(evt, closePopup);
   };
 
   var onInputFocus = function () {
@@ -37,7 +37,7 @@
   setupOpen.addEventListener('click', openPopup);
 
   setupOpen.addEventListener('keydown', function (evt) {
-    window.util.isEnterEvent(evt, openPopup);
+    window.utils.isEnterEvent(evt, openPopup);
   });
 
   inputUserName.addEventListener('focus', onInputFocus);
@@ -46,7 +46,7 @@
   setupClose.addEventListener('click', closePopup);
 
   setupClose.addEventListener('keydown', function (evt) {
-    window.util.isEnterEvent(evt, closePopup);
+    window.utils.isEnterEvent(evt, closePopup);
   });
 
   dialogHandler.addEventListener('mousedown', function (evt) {
@@ -96,6 +96,16 @@
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+  });
+
+  var loadHandler = function () {
+    setup.classList.add('hidden');
+  };
+
+  var form = setup.querySelector('.setup-wizard-form');
+  form.addEventListener('submit', function (evt) {
+    window.backend.save(new FormData(form), loadHandler, window.utils.errorHandler);
+    evt.preventDefault();
   });
 
 })();
