@@ -89,7 +89,6 @@
   var wizardFireballElement = setup.querySelector('.setup-fireball-wrap');
   wizardFireballElement.addEventListener('click', function () {
     onWizardClick('fireball', 'background', fireballs, wizardFireballElement);
-    window.debounce(updateWizards);
   });
 
   var onWizardClick = function (item, attr, array, button, fun) {
