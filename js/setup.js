@@ -60,24 +60,30 @@
     window.render(wizards.slice().sort(function (left, right) {
       var rankDiff = getRank(right) - getRank(left);
       if (rankDiff === 0) {
-        rankDiff = namesComparator(left.name, right.name);
+        return namesComparator(left.name, right.name);
       }
       return rankDiff;
     }));
   };
 
+  var onCoatChange = window.debounce(function (color) {
+    coatColor = color;
+    updateWizards();
+  });
+
+  var onEyesChange = window.debounce(function (color) {
+    eyesColor = color;
+    updateWizards();
+  });
+
   var wizardCoatElement = setup.querySelector('.wizard-coat');
   wizardCoatElement.addEventListener('click', function () {
-    onWizardClick('coat', 'fill', coats, wizardCoatElement);
-    coatColor = coats[indexColor];
-    window.debounce(updateWizards);
+    onWizardClick('coat', 'fill', coats, wizardCoatElement, onCoatChange);
   });
 
   var wizardEyesElement = setup.querySelector('.wizard-eyes');
   wizardEyesElement.addEventListener('click', function () {
-    onWizardClick('eyes', 'fill', eyes, wizardEyesElement);
-    eyesColor = eyes[indexColor];
-    window.debounce(updateWizards);
+    onWizardClick('eyes', 'fill', eyes, wizardEyesElement, onEyesChange);
   });
 
   var wizardFireballElement = setup.querySelector('.setup-fireball-wrap');
@@ -86,10 +92,12 @@
     window.debounce(updateWizards);
   });
 
-  var onWizardClick = function (item, attr, array, button) {
+  var onWizardClick = function (item, attr, array, button, fun) {
     indexColor = (indexColor + 1) % array.length;
-    button.style[attr] = array[indexColor];
-    setup.querySelector('input[name="' + item + '-color"]').value = array[indexColor];
+    var newColor = array[indexColor];
+    button.style[attr] = newColor;
+    setup.querySelector('input[name="' + item + '-color"]').value = newColor;
+    fun(newColor);
   };
 
   var loadHandler = function (data) {
